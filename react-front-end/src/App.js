@@ -63,6 +63,16 @@ class App extends Component {
     this.state = { galleryOpened: false };
     this.toggleGallery = this.toggleGallery.bind(this);
   }
+  componentDidMount() {
+    axios
+      .get('https://api.unsplash.com/photos/?client_id=' + cred.APP_ID)
+      .then(data => {
+        this.setState({ imgs: data.data });
+      })
+      .catch(err => {
+        console.log('Error happened during fetching!', err);
+      });
+  }
 
   // fetchData = () => {
   //   axios.get('/api/data') // You can simply make your requests to "/api/whatever you want"
