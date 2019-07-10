@@ -4,22 +4,22 @@ import './App.css';
 import ReactBnbGallery from 'react-bnb-gallery'
 import Gallery from "react-photo-gallery";
 
-const photos = [{
-  photo: "https://source.unsplash.com/aZjw7xI3QAA/1144x763",
-  caption: "Viñales, Pinar del Río, Cuba",
-  subcaption: "Photo by Simon Matzinger on Unsplash",
-  thumbnail: "https://source.unsplash.com/aZjw7xI3QAA/100x67",
-}, {
-  photo: "https://source.unsplash.com/c77MgFOt7e0/1144x763",
-  caption: "La Habana, Cuba",
-  subcaption: "Photo by Gerardo Sanchez on Unsplash",
-  thumbnail: "https://source.unsplash.com/c77MgFOt7e0/100x67",
-}, {
-  photo: "https://source.unsplash.com/QdBHnkBdu4g/1144x763",
-  caption: "Woman smoking a tobacco",
-  subcaption: "Photo by Hannah Cauhepe on Unsplash",
-  thumbnail: "https://source.unsplash.com/QdBHnkBdu4g/100x67",
-}];
+// const photos = [{
+//   photo: "https://source.unsplash.com/aZjw7xI3QAA/1144x763",
+//   caption: "Viñales, Pinar del Río, Cuba",
+//   subcaption: "Photo by Simon Matzinger on Unsplash",
+//   thumbnail: "https://source.unsplash.com/aZjw7xI3QAA/100x67",
+// }, {
+//   photo: "https://source.unsplash.com/c77MgFOt7e0/1144x763",
+//   caption: "La Habana, Cuba",
+//   subcaption: "Photo by Gerardo Sanchez on Unsplash",
+//   thumbnail: "https://source.unsplash.com/c77MgFOt7e0/100x67",
+// }, {
+//   photo: "https://source.unsplash.com/QdBHnkBdu4g/1144x763",
+//   caption: "Woman smoking a tobacco",
+//   subcaption: "Photo by Hannah Cauhepe on Unsplash",
+//   thumbnail: "https://source.unsplash.com/QdBHnkBdu4g/100x67",
+// }];
 
 const photos_new = [
   {
@@ -54,13 +54,18 @@ const photos_new = [
   }
 ];
 
+let photos_new1 = [{
+  src: "https://source.unsplash.com/u9cG4cuJ6bU/4927x1000",
+  width: 4927,
+  height: 1000
+}]; //empty array of urls
 class App extends Component {
   constructor(props) {
     super(props)
     // this.state = {
     //   message: 'Click the button to load data!'
     // }
-    this.state = { galleryOpened: false,
+    this.state = { 
       imgs: [] };
     this.toggleGallery = this.toggleGallery.bind(this);
   }
@@ -77,17 +82,22 @@ class App extends Component {
   // }
 
   fetchData = () => {
+    console.log(this.imgs);
     axios.get('https://api.unsplash.com/photos/?client_id=' + '26d750fbc6c381bb4b799351cdf5021c7251dcb04251a4956aa84e50234e8637') // You can simply make your requests to "/api/whatever you want"
     .then((response) => {
       // handle success
+      // for(let urls in response.data)
+      let new_urls = [];
       for(let urls in response.data){
-        
-        console.log(response.data[urls].urls.raw) // The entire response from the Rails API
+        new_urls.push({'src':response.data[urls].urls.raw, 'width':200, 'height':300})
+        //console.log(response.data[urls].urls.raw) // The entire response from the Rails API
         
       }
-        console.log(response.data.message) // Just the message
+      // console.log(photos_new1);
+      console.log(new_urls);
+      console.log(response.data.message) // Just the message
         this.setState({
-          message: response.data.message
+          imgs: new_urls
       });
     }) 
   }
@@ -113,12 +123,8 @@ class App extends Component {
       <button onClick={this.toggleGallery}>Open photo gallery</button>
       <button onClick={this.fetchData} >
            Fetch Data
-         </button>
-      <Gallery photos ={photos_new}/>
-      <ReactBnbGallery
-      show={this.state.galleryOpened}
-      photos={photos}
-      onClose={this.toggleGallery} />
+      </button>
+      <Gallery photos ={this.state.imgs}/>
       </div>
     );
   }
