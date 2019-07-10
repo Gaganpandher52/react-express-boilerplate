@@ -63,29 +63,29 @@ class App extends Component {
     this.state = { galleryOpened: false };
     this.toggleGallery = this.toggleGallery.bind(this);
   }
-  componentDidMount() {
-    axios
-      .get('https://api.unsplash.com/photos/?client_id=' + cred.APP_ID)
-      .then(data => {
-        this.setState({ imgs: data.data });
-      })
-      .catch(err => {
-        console.log('Error happened during fetching!', err);
-      });
-  }
-
-  // fetchData = () => {
-  //   axios.get('/api/data') // You can simply make your requests to "/api/whatever you want"
-  //   .then((response) => {
-  //     // handle success
-  //     console.log(response.data) // The entire response from the Rails API
-
-  //     console.log(response.data.message) // Just the message
-  //     this.setState({
-  //       message: response.data.message
+  // componentDidMount() {
+  //   axios
+  //     .get('https://api.unsplash.com/photos/?client_id=' + '26d750fbc6c381bb4b799351cdf5021c7251dcb04251a4956aa84e50234e8637')
+  //     .then(data => {
+  //       this.setState({ imgs: data.data });
+  //     })
+  //     .catch(err => {
+  //       console.log('Error happened during fetching!', err);
   //     });
-  //   }) 
   // }
+
+  fetchData = () => {
+    axios.get('https://api.unsplash.com/photos/?client_id=' + '26d750fbc6c381bb4b799351cdf5021c7251dcb04251a4956aa84e50234e8637') // You can simply make your requests to "/api/whatever you want"
+    .then((response) => {
+      // handle success
+      console.log(response.data) // The entire response from the Rails API
+
+      console.log(response.data.message) // Just the message
+      this.setState({
+        message: response.data.message
+      });
+    }) 
+  }
   toggleGallery() {
     this.setState(prevState => ({
       galleryOpened: !prevState.galleryOpened
@@ -107,6 +107,9 @@ class App extends Component {
     return (
       <div>
       <button onClick={this.toggleGallery}>Open photo gallery</button>
+      <button onClick={this.fetchData} >
+           Fetch Data
+         </button>
       <Gallery photos ={photos_new}/>
       <ReactBnbGallery
       show={this.state.galleryOpened}
