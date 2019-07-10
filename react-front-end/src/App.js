@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
 import ReactBnbGallery from 'react-bnb-gallery'
+import Gallery from "react-photo-gallery";
 
 const photos = [{
   photo: "https://source.unsplash.com/aZjw7xI3QAA/1144x763",
@@ -19,6 +20,39 @@ const photos = [{
   subcaption: "Photo by Hannah Cauhepe on Unsplash",
   thumbnail: "https://source.unsplash.com/QdBHnkBdu4g/100x67",
 }];
+
+const photos_new = [
+  {
+    src: "https://source.unsplash.com/Dm-qxdynoEc/800x799",
+    width: 1,
+    height: 1
+  },
+  {
+    src: "https://source.unsplash.com/qDkso9nvCg0/600x799",
+    width: 3,
+    height: 4
+  },
+  {
+    src: "https://source.unsplash.com/iecJiKe_RNg/600x799",
+    width: 3,
+    height: 4
+  },
+  {
+    src: "https://source.unsplash.com/epcsn8Ed8kY/600x799",
+    width: 3,
+    height: 4
+  },
+  {
+    src: "https://source.unsplash.com/NQSWvyVRIJk/800x599",
+    width: 4,
+    height: 3
+  },
+  {
+    src: "https://source.unsplash.com/u9cG4cuJ6bU/4927x1000",
+    width: 4927,
+    height: 1000
+  }
+];
 
 class App extends Component {
   constructor(props) {
@@ -63,6 +97,7 @@ class App extends Component {
     return (
       <div>
       <button onClick={this.toggleGallery}>Open photo gallery</button>
+      <Gallery photos ={photos_new}/>
       <ReactBnbGallery
       show={this.state.galleryOpened}
       photos={photos}
