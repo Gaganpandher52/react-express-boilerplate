@@ -60,7 +60,8 @@ class App extends Component {
     // this.state = {
     //   message: 'Click the button to load data!'
     // }
-    this.state = { galleryOpened: false };
+    this.state = { galleryOpened: false,
+      imgs: [] };
     this.toggleGallery = this.toggleGallery.bind(this);
   }
   // componentDidMount() {
@@ -68,6 +69,7 @@ class App extends Component {
   //     .get('https://api.unsplash.com/photos/?client_id=' + '26d750fbc6c381bb4b799351cdf5021c7251dcb04251a4956aa84e50234e8637')
   //     .then(data => {
   //       this.setState({ imgs: data.data });
+  //       console.log('seems to work!')
   //     })
   //     .catch(err => {
   //       console.log('Error happened during fetching!', err);
@@ -78,11 +80,14 @@ class App extends Component {
     axios.get('https://api.unsplash.com/photos/?client_id=' + '26d750fbc6c381bb4b799351cdf5021c7251dcb04251a4956aa84e50234e8637') // You can simply make your requests to "/api/whatever you want"
     .then((response) => {
       // handle success
-      console.log(response.data) // The entire response from the Rails API
-
-      console.log(response.data.message) // Just the message
-      this.setState({
-        message: response.data.message
+      for(let urls in response.data){
+        
+        console.log(response.data[urls].urls.raw) // The entire response from the Rails API
+        
+      }
+        console.log(response.data.message) // Just the message
+        this.setState({
+          message: response.data.message
       });
     }) 
   }
@@ -91,7 +96,6 @@ class App extends Component {
       galleryOpened: !prevState.galleryOpened
     }));
   }
-  
 
   // render() {
   //   return (
