@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
-import ReactBnbGallery from 'react-bnb-gallery'
 import Gallery from "react-photo-gallery";
 
 console.log(process.env)
@@ -10,22 +9,20 @@ class App extends Component {
     super(props)
     this.state = { 
       imgs: [] };
-    
   }
-
+  //fetchData method fetched out pics form api endpoint
   fetchData = () => {
     console.log(this.imgs);
     axios.get('https://api.unsplash.com/photos/?client_id=' + process.env.REACT_APP_API_KEY)
     .then((response) => {
 
       let images = [];//empty array of images
-
       for(let urls in response.data){
         images.push({'src':response.data[urls].urls.raw, 'width':200, 'height':150})
       }
-      console.log(images)
-        this.setState({
-          imgs: images
+      //setting the state of the imgs
+      this.setState({
+        imgs: images
       });
     }) 
   }
@@ -33,7 +30,6 @@ class App extends Component {
   render () {
     return (
       <div>
-        {/* <button onClick={this.toggleGallery}>Open photo gallery</button> */}
         <button className = 'fetch-btn' onClick={this.fetchData}>
            Fetch Images
         </button>
